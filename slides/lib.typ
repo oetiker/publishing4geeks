@@ -47,6 +47,12 @@
   }
 }
 
+// Show a piece of code given as a string.
+#let src-text(code-string, lang, size: code.normal) = {
+  set text(size: size)
+  raw(code-string, lang: lang, block: true)
+}
+
 // Show the lines of a file between two marker lines.
 #let between(path, lang, start, end, size: code.normal) = {
   let lines = read(path).split("\n")

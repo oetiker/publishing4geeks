@@ -62,6 +62,31 @@
 - *Watch out:* `*text*` is _italic_ in Markdown, but *bold* in Typst!
 ]
 
+== The language behind Typst
+
+#let demo = "#let greet(name) = [Hello *#name*!]
+#greet(\"Geeks\")
+
+#let squares = range(1, 5).map(n => n * n)
+Squares: #squares.map(str).join(\", \")"
+
+#two[
+- *Its own language*, made for Typst: not Lua, not JavaScript.
+  The syntax looks familiar: `let`, `if`, `for`, `n => n * n`
+- *Three modes:* markup for the text, `#` for code, `$…$` for maths
+- *Content is a value:* `[Hello *world*]` can be stored,
+  passed to a function and returned
+- *Functions are pure:* same input, same output. So Typst can
+  recompile only what changed.
+][
+#src-text(demo, "typ", size: code.large)
+
+#block(inset: (left: 8pt))[#eval(demo, mode: "markup")]
+
+#note[LaTeX macros replace text with text.
+  Typst functions compute a value and return it.]
+]
+
 == Where Typst shines
 
 #two[
