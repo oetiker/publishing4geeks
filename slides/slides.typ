@@ -367,6 +367,23 @@ An LLM explains messages like this one immediately.
 - Editors: TeXstudio, VS Code with _LaTeX Workshop_
 ]
 
+== Learn more: lshort
+
+#two[
+*The Not So Short Introduction to LaTeX*
+
+by Tobias Oetiker and others
+
+- Free PDF: #link("https://tobi.oetiker.ch/latex/lshort.pdf")[tobi.oetiker.ch/latex/lshort.pdf]
+- With a full TeX Live it is already on your disk: `texdoc lshort`
+- On CTAN in many languages
+][
+- Everything from today, and much more: maths, tables, pictures,
+  bibliographies, your own commands
+- Sticks to what the basic LaTeX system offers
+- A good companion to an LLM: read the chapter, then ask the questions
+]
+
 == Packages
 
 `\usepackage{name}` loads a package.
@@ -1033,6 +1050,7 @@ and writes all of them, and Typst too.
 #grid(columns: (1fr, 1fr), column-gutter: 1em,
   [
     *LaTeX*
+    - #link("https://tobi.oetiker.ch/latex/lshort.pdf")[The Not So Short Introduction to LaTeX]
     - #link("https://www.overleaf.com/learn")[overleaf.com/learn]
     - #link("https://ctan.org")[ctan.org]
 
