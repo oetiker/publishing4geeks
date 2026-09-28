@@ -364,6 +364,21 @@ An LLM explains messages like this one immediately.
 - *Accepted everywhere:* journals, arXiv, publishers' templates
 ]
 
+== Where LaTeX hurts
+
+#two[
+- *Cryptic errors:* the message points to where TeX noticed the problem,
+  not to where you made the mistake
+- *Slow feedback:* compile, and often compile again for references
+  and the bibliography
+- *Big install:* several GB, several engines, packages that can clash
+][
+- *Hard to change the look:* the class decides, and changing it needs
+  macro knowledge
+- *Special characters:* `% & _ # $` need a backslash in normal text
+- *Made for paper:* the output is PDF; converting to HTML is rough
+]
+
 == Strength: maths and cross-references
 
 #grid(columns: (1fr, 1fr), column-gutter: 1em, align: horizon,
@@ -545,6 +560,19 @@ systems, Markdown converters, site generators, JavaScript frameworks.
 - *Backwards compatible:* pages from 1995 still open today
 ]
 
+== Where HTML hurts
+
+#two[
+- *Hard to read:* the text hides between tags
+- *Two or three languages:* HTML, CSS, and JavaScript for anything dynamic
+- *Silent errors:* browsers accept broken HTML, so mistakes stay invisible
+][
+- *Weak on paper:* page breaks, footnotes and headers are hard to control
+- *No document features built in:* no table of contents, no cross-references
+- *Maths:* MathML works in current browsers, but nobody writes it by hand
+- *Many files:* a page with images and CSS is harder to pass on than a PDF
+]
+
 == Strength: one page, every screen
 
 #grid(columns: (1fr, 1fr), column-gutter: 1em,
@@ -685,6 +713,22 @@ HTML itself has no packages. It grows in layers:
 - *Plain text in git:* clean diffs, easy merges
 - *Everywhere:* GitHub, wikis, chat, note apps, documentation sites
 - *One source, many outputs* with Pandoc
+]
+
+== Where Markdown hurts
+
+#two[
+- *Many flavours:* a file that works in one tool breaks in another
+- *Little structure:* no captions, no cross-references, no variables,
+  no includes, no comments
+- *Tables:* an extension; pipes are tedious to align, and a cell holds
+  only one line
+][
+- *No control of the look:* the renderer decides
+- *Invisible rules:* the indent of nested lists, two trailing spaces
+  for a line break
+- *When you need more,* you add HTML or extensions, and the readable
+  source is gone
 ]
 
 == Markdown: the language of LLMs
@@ -919,6 +963,21 @@ Markdown has no packages. Extensions live *in the tool* that converts it.
 - *`set` and `show` rules:* change the look of every element in one place
 - *Maths with less typing:* `$sum_(k=1)^n k$` gives $sum_(k=1)^n k$
 - *Modern defaults:* Unicode, system fonts, tagged PDF for accessibility
+]
+
+== Where Typst hurts
+
+#two[
+- *Young:* version 0.x, and a new version can break your document
+- *Smaller ecosystem:* fewer packages and templates than LaTeX,
+  and few journals accept it
+- *LLMs know it less well:* they mix old and new syntax,
+  or invent functions. Check against the docs.
+][
+- *PDF first:* HTML export is still experimental
+- *Two modes:* markup and code, switched with `#`; easy to mix up at first
+- *Business model:* the compiler is free, the web app is a commercial
+  service with a free tier
 ]
 
 == Strength: scripting in the document
