@@ -11,6 +11,7 @@
   markdown: rgb("#6f42c1"),
   typst: rgb("#239dad"),
 )
+#let repo = "https://github.com/oetiker/publishing4geeks"
 #let part = state("part", (name: "", color: colors.intro))
 
 // <demo>
@@ -21,6 +22,8 @@
   footer: context {
     set text(size: 10pt, fill: luma(130))
     part.get().name
+    h(1fr)
+    link(repo, repo.trim("https://", at: start))
     h(1fr)
     counter(page).display()
   },
