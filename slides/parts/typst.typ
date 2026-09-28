@@ -122,33 +122,6 @@ Squares: #squares.map(str).join(\", \")"
   framed(image("/build/strength-typst.pdf", width: 100%)),
 )
 
-== How this deck works
-
-#between("/slides/slides.typ", "typ", "// <demo>", "// </demo>")
-
-== How the files fit together
-
-#two[
-#set text(size: code.large)
-```
-slides/
-  slides.typ    look, title page
-  lib.typ       helpers, colours
-  parts/
-    intro.typ
-    latex.typ
-    html.typ
-    …
-```
-][
-- `slides.typ` sets the look, then pulls in each part:
-  `#include "parts/latex.typ"`
-- Each part starts with `#import "../lib.typ": *`
-- Helpers are plain functions: `#two[…][…]` puts two columns side by side
-- The code on the slides is read from the real example files:
-  `read("/examples/sample.tex")`
-]
-
 == Using Typst
 
 #two[

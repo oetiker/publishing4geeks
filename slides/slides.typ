@@ -56,3 +56,4 @@
 #include "parts/markdown.typ"
 #include "parts/typst.typ"
 #include "parts/wrapup.typ"
+#include "parts/deck.typ"
