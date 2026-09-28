@@ -94,6 +94,21 @@
 
 #let framed(body) = box(stroke: 0.5pt + luma(170), body)
 
+// A screenshot inside a simple browser window: tab, address bar, page.
+#let browser(img, title: "", url: "", width: 100%, height: auto) = block(
+  width: width, stroke: 0.8pt + luma(165), radius: 7pt, clip: true, fill: white, {
+    set text(size: 9pt, font: "Inter")
+    let dot(c) = circle(radius: 3.5pt, fill: rgb(c))
+    block(fill: luma(222), width: 100%, inset: (left: 8pt, top: 5pt), spacing: 0pt,
+      grid(columns: (auto, auto), column-gutter: 10pt, align: horizon,
+        stack(dir: ltr, spacing: 4pt, dot("#ff5f57"), dot("#febc2e"), dot("#28c840")),
+        box(fill: luma(246), radius: (top: 5pt), inset: (x: 12pt, y: 5pt), title)))
+    block(fill: luma(246), width: 100%, inset: (x: 8pt, y: 4pt), spacing: 0pt,
+      box(fill: white, stroke: 0.5pt + luma(210), radius: 9pt, inset: (x: 10pt, y: 3pt),
+        width: 100%, text(fill: luma(70), url)))
+    block(spacing: 0pt, height: height, clip: true, image(img, width: 100%))
+  })
+
 #let part-slide(key, name, tagline) = {
   page(fill: colors.at(key), footer: none, align(horizon, {
     part.update((name: name, color: colors.at(key)))
@@ -464,8 +479,9 @@ Document classes set the basic layout:
 
 == The result
 
-#grid(columns: (auto, 1fr), column-gutter: 1.2em,
-  framed(image("/build/sample-html.png", height: 11.5cm)),
+#grid(columns: (1.9fr, 1fr), column-gutter: 1.2em,
+  browser("/build/sample-html.png", title: "Counting Words",
+    url: "file:///…/examples/sample.html"),
   [
     Open the file in a browser. That is all.
 
@@ -529,12 +545,14 @@ systems, Markdown converters, site generators, JavaScript frameworks.
 == Strength: one page, every screen
 
 #grid(columns: (1fr, 1fr), column-gutter: 1em,
-  src("/examples/strength-html.html", "html", from: 8, to: 31, size: 9pt),
+  src("/examples/strength-html.html", "html", size: 9pt),
   {
-    framed(image("/build/strength-html-wide.png", width: 100%))
+    browser("/build/strength-html-wide.png", title: "Tools",
+      url: "file:///…/strength-html.html")
     v(0.4em)
     grid(columns: (auto, 1fr), column-gutter: 0.8em, align: bottom,
-      framed(image("/build/strength-html-narrow.png", height: 7.2cm)),
+      browser("/build/strength-html-narrow.png", title: "Tools",
+        url: "…", width: 3.3cm),
       note[The same file, 900 and 360 pixels wide. No JavaScript.],
     )
   },
@@ -619,8 +637,9 @@ HTML itself has no packages. It grows in layers:
 
 == The result in a browser
 
-#grid(columns: (auto, 1fr), column-gutter: 1.2em,
-  framed(image("/build/sample-md.png", height: 11.5cm)),
+#grid(columns: (1.9fr, 1fr), column-gutter: 1.2em,
+  browser("/build/sample-md.png", title: "Counting Words",
+    url: "file:///…/sample.html"),
   [
     `pandoc -f gfm --standalone`\
     `  sample.md -o sample.html`

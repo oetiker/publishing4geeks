@@ -4,7 +4,7 @@
 B      := build
 EX     := examples
 CHROME := google-chrome --headless --no-sandbox --hide-scrollbars \
-          --disable-gpu --no-pdf-header-footer
+          --disable-gpu --no-pdf-header-footer --force-device-scale-factor=2
 
 RENDERS := $(B)/sample-latex.pdf $(B)/sample-html.png $(B)/sample-md.png \
            $(B)/sample-md-term.json $(B)/sample-typst.pdf \
@@ -26,14 +26,14 @@ $(B)/sample-latex.pdf: $(EX)/sample.tex | $(B)
 
 # HTML -> browser screenshot
 $(B)/sample-html.png: $(EX)/sample.html | $(B)
-	$(CHROME) --window-size=900,1000 --screenshot=$(abspath $@) file://$(abspath $<)
+	$(CHROME) --window-size=1280,800 --screenshot=$(abspath $@) file://$(abspath $<)
 
 # Markdown -> HTML (pandoc) -> browser screenshot
 $(B)/sample-md.html: $(EX)/sample.md | $(B)
 	pandoc -f gfm -t html5 --standalone --metadata pagetitle="Counting Words" \
 	  -V maxwidth=40em -o $@ $<
 $(B)/sample-md.png: $(B)/sample-md.html
-	$(CHROME) --window-size=900,1000 --screenshot=$(abspath $@) file://$(abspath $<)
+	$(CHROME) --window-size=1280,800 --screenshot=$(abspath $@) file://$(abspath $<)
 
 # Markdown -> terminal (mdmost), captured through a pseudo terminal
 $(B)/sample-md-term.json: $(EX)/sample.md tools/ansi2json.py | $(B)
