@@ -10,6 +10,9 @@ Four systems, one sample document:
 | Markdown | `examples/sample.md`    | browser, terminal |
 | Typst    | `examples/sample.typ`   | PDF           |
 
+Slides and sample files online: https://oetiker.github.io/publishing4geeks/
+(built and published by `.github/workflows/pages.yml` on every push to `main`).
+
 The slides are written in Typst:
 
 - `slides/slides.typ`: the look of the deck, the title page, and one
@@ -26,6 +29,7 @@ line number, so editing a sample does not break a slide.
 ```sh
 make          # renders all samples, then build/slides.pdf
 make watch    # live-rebuild the slides while editing
+make site     # build/site: landing page, slides, sample files
 make clean
 ```
 

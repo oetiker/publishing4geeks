@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Publishing for Geeks</title>
+  <style>
+    :root { --bg: #fdfdfc; --fg: #2b2f38; --muted: #666b75; --link: #1a6fd4;
+            --card: #f1f2f4; --accent: #239dad; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #1b1d22; --fg: #e6e7ea; --muted: #a0a4ad; --link: #7fb2ff;
+              --card: #272a31; --accent: #4fc3d4; }
+    }
+    body { background: var(--bg); color: var(--fg); margin: 0;
+           font: 18px/1.5 system-ui, sans-serif; }
+    main { max-width: 40em; margin: 0 auto; padding: 2em 16px; }
+    h1 { margin-bottom: 0.1em; }
+    .sub { color: var(--muted); margin-top: 0; }
+    a { color: var(--link); }
+    .button { display: inline-block; background: var(--accent); color: #fff;
+              padding: 0.6em 1.2em; border-radius: 8px; text-decoration: none;
+              font-weight: 600; }
+    ul { background: var(--card); border-radius: 8px; padding: 0.8em 1em 0.8em 2.2em; }
+    code { font-size: 0.9em; }
+    footer { color: var(--muted); font-size: 0.85em; margin-top: 3em; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Publishing for Geeks</h1>
+  <p class="sub">Text in, page out: LaTeX, HTML, Markdown and Typst</p>
+
+  <p><a class="button" href="slides.pdf">Slides (PDF)</a></p>
+
+  <h2>Sample files for the exercises</h2>
+  <p>The same short document in four languages. Open one, copy it, and
+     paste it into the web service named on the exercise slide.</p>
+  <ul>
+    <li>LaTeX: <a href="examples/sample.tex"><code>sample.tex</code></a></li>
+    <li>HTML: <a href="examples/sample.html"><code>sample.html</code></a>
+        (opens as a page; <kbd>Ctrl+U</kbd> shows the source)</li>
+    <li>Markdown: <a href="examples/sample.md"><code>sample.md</code></a></li>
+    <li>Typst: <a href="examples/sample.typ"><code>sample.typ</code></a></li>
+  </ul>
+
+  <footer>
+    Tobias Oetiker, OETIKER+PARTNER AG ·
+    Source and build: <a href="https://github.com/oetiker/publishing4geeks">github.com/oetiker/publishing4geeks</a>
+  </footer>
+</main>
+</body>
+</html>

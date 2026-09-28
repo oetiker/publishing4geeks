@@ -86,7 +86,13 @@ $(B)/slides.pdf: $(SLIDES_SRC) $(RENDERS) $(wildcard $(EX)/*)
 watch: $(RENDERS)
 	typst watch $(TYPST_SLIDES) slides/slides.typ $(B)/slides.pdf
 
+# The web site: landing page, slides and sample files (for GitHub Pages)
+site: $(B)/slides.pdf site/index.html
+	mkdir -p $(B)/site/examples
+	cp site/index.html $(B)/slides.pdf $(B)/site/
+	cp $(EX)/sample.* $(B)/site/examples/
+
 clean:
 	rm -rf $(B)
 
-.PHONY: all watch clean
+.PHONY: all watch site clean
