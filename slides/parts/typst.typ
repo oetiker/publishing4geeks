@@ -87,6 +87,13 @@ Squares: #squares.map(str).join(\", \")"
   Typst functions compute a value and return it.]
 ]
 
+== Scripting examples
+
+#grid(columns: (1fr, 1fr), column-gutter: 1em, align: horizon,
+  src("/examples/strength-typst.typ", "typ"),
+  framed(image("/build/strength-typst.pdf", width: 100%)),
+)
+
 == Where Typst shines
 
 #two[
@@ -114,13 +121,6 @@ Squares: #squares.map(str).join(\", \")"
 - *Business model:* the compiler is free, the web app is a commercial
   service with a free tier
 ]
-
-== Strength: scripting in the document
-
-#grid(columns: (1fr, 1fr), column-gutter: 1em, align: horizon,
-  src("/examples/strength-typst.typ", "typ", size: code.small),
-  framed(image("/build/strength-typst.pdf", width: 100%)),
-)
 
 == Using Typst
 
