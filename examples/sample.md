@@ -1,12 +1,13 @@
-<!-- Markdown has no comment syntax of its own.
-     HTML comments like this one often work. -->
-[//]: # (An unused "link definition": a comment.)
+[//]: # (Markdown has no comment syntax.)
+[//]: # (An unused link definition like this one)
+[//]: # (is dropped by every renderer: a comment.)
 
 # Counting Words
 
 A. Geek
 
-<!-- An empty line starts a new paragraph. -->
+[//]: # (An empty line starts a new paragraph.)
+
 This is a *short* sample document. It shows
 **bold** text, *italic* text and
 `inline code`.
@@ -28,8 +29,9 @@ if you know your tools.
 2. Open a terminal.
 3. Run one of the commands below.
 
-<!-- Tables are an extension (GitHub Flavored
-     Markdown). The 2004 original has none. -->
+[//]: # (Tables are an extension: GitHub Flavored)
+[//]: # (Markdown. The 2004 original has none.)
+
 | Tool   | Command            | Notes    |
 |--------|--------------------|----------|
 | wc     | `wc -w file.txt`   | fast     |
@@ -37,8 +39,9 @@ if you know your tools.
 
 ### A small program
 
-<!-- Three backticks start a code block.
-     The word after them names the language. -->
+[//]: # (Three backticks start a code block.)
+[//]: # (The word after them names the language.)
+
 ```python
 import sys
 

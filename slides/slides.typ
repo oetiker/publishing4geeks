@@ -498,7 +498,7 @@ HTML itself has no packages. It grows in layers:
 
 == The source
 
-#src("/examples/sample.md", "markdown", split: 25, size: 12pt)
+#src("/examples/sample.md", "markdown", split: 26, size: 11.5pt)
 
 == The result in a browser
 
@@ -517,21 +517,21 @@ HTML itself has no packages. It grows in layers:
 == The result in a terminal
 
 #grid(columns: (1fr, 1fr), column-gutter: 0.6em,
-  terminal("/build/sample-md-term.json", to: 27, size: 8.8pt),
-  terminal("/build/sample-md-term.json", from: 27, size: 8.8pt),
+  terminal("/build/sample-md-term.json", to: 20, size: 8.8pt),
+  terminal("/build/sample-md-term.json", from: 21, size: 8.8pt),
 )
 #note[`mdmost sample.md`: a pager like `less`, but for Markdown.]
 
 == The rules
 
 - `#`, `##`, `###`: headings
-- `*italic*` or `_italic_`, `**bold**`, `` `code` ``
+- `*italic*` or `_italic_`, `**bold**`, #raw("`code`")
 - `-` or `*` for bullets, `1.` for numbered lists
 - Indent to nest a list
 - An empty line starts a new paragraph
 - Three backticks start a code block, with the language name after them
 - `[text](https://example.com)` makes a link
-- HTML is allowed in the middle of Markdown
+- Keep HTML out of Markdown: not every renderer shows it
 
 == One name, many languages
 
@@ -576,16 +576,18 @@ HTML itself has no packages. It grows in layers:
 Markdown has no comment syntax. Two tricks are common:
 
 ```markdown
-<!-- an HTML comment -->
 [//]: # (a link definition that is never used)
+<!-- an HTML comment -->
 ```
 
-- The HTML comment is passed on to the HTML, and the browser hides it.
-  Other renderers may not: `mdmost` shows `⟨html⟩` in its place.
-- The link trick vanishes everywhere, but it is ugly.
+- The link trick is ugly, but every renderer drops it.
+  Our sample uses it.
+- The HTML comment is HTML inside Markdown. A converter to HTML passes
+  it on, and the browser hides it. `mdmost` does not render HTML
+  on purpose: it shows `⟨html⟩` in its place.
 
 #v(0.3em)
-*Tip:* decide which flavour you write, and tell your LLM.
+*Tip:* keep HTML out of Markdown. If you need HTML, write HTML.
 
 == Using Markdown
 
@@ -673,7 +675,7 @@ Popular extensions:
 == The rules
 
 - *Markup mode* (the default): `= Heading`, `*bold*`, `_italic_`,
-  `` `code` ``, `-` bullet, `+` numbered, empty line = paragraph
+  #raw("`code`"), `-` bullet, `+` numbered, empty line = paragraph
 - `#` switches to *code mode*: `#table(…)`, `#image("x.png")`
 - `[ … ]` is content (markup) inside code
 - `// comment` and `/* comment */`
