@@ -37,7 +37,7 @@ $(B)/sample-md.png: $(B)/sample-md.html
 
 # Markdown -> terminal (mdmost), captured through a pseudo terminal
 $(B)/sample-md-term.json: $(EX)/sample.md tools/ansi2json.py | $(B)
-	script -qc 'mdmost --render-once --width 64 --no-icons $<' /dev/null \
+	script -qc 'mdmost --render-once --width 64 --no-icons --theme light $<' /dev/null \
 	  | python3 tools/ansi2json.py > $@
 
 # Typst -> PDF
