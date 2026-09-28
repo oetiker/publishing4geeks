@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Phones: use the real screen width -->
+  <meta name="viewport" content="width=device-width">
+  <title>Tools</title>
+  <style>
+    body  { font-family: sans-serif; margin: 1em; }
+    /* As many columns as fit, each at least 12em */
+    .cards { display: grid; gap: 1em;
+             grid-template-columns:
+               repeat(auto-fit, minmax(12em, 1fr)); }
+    .card { border: 1px solid #ccc; border-radius: 8px;
+            padding: 0.5em 1em; }
+  </style>
+</head>
+<body>
+  <div class="cards">
+    <div class="card"><h3>wc</h3><p>Fast and everywhere.</p></div>
+    <div class="card"><h3>Python</h3><p>Flexible.</p></div>
+    <div class="card"><h3>awk</h3><p>Small and clever.</p></div>
+  </div>
+  <!-- details: a click opens and closes it, no JavaScript -->
+  <details open>
+    <summary>How does wc count?</summary>
+    <p>A word is anything between spaces. See the
+       <a href="https://man7.org/linux/man-pages/man1/wc.1.html">
+       manual</a>.</p>
+  </details>
+</body>
+</html>

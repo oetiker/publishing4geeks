@@ -1,0 +1,20 @@
+\documentclass{article}
+\pagestyle{empty}  % no page number
+\begin{document}
+
+\section{Gauss}\label{sec:gauss}
+% $...$ is maths inside the text line.
+The area under the curve $e^{-x^2}$ is
+\begin{equation}\label{eq:gauss}
+  \int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}
+\end{equation}
+and the young Gauss added up
+\begin{equation}\label{eq:sum}
+  \sum_{k=1}^{n} k = \frac{n(n+1)}{2}.
+\end{equation}
+
+% \label marks a place, \ref prints its number.
+Equation~\ref{eq:sum} in Section~\ref{sec:gauss}
+is easier than equation~\ref{eq:gauss}.
+
+\end{document}

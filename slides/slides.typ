@@ -308,6 +308,23 @@ All files are in the `examples/` folder.
 The `_` means “subscript”, and that is only allowed in maths.
 Write `file\_name.txt`. An LLM explains messages like this one immediately.
 
+== Where LaTeX shines
+
+- *Maths:* the reference. MathJax and KaTeX show LaTeX maths on the web,
+  and Markdown and Word accept its syntax.
+- *Numbers that stay correct:* cross-references, table of contents,
+  index, bibliography (BibTeX, biblatex)
+- *Fine typography:* line breaks chosen for the whole paragraph, hyphenation
+- *Stable:* a document from the 1990s still compiles today
+- *Accepted everywhere:* journals, arXiv, publishers' templates
+
+== Strength: maths and cross-references
+
+#grid(columns: (1fr, 1fr), column-gutter: 1em, align: horizon,
+  src("/examples/strength-latex.tex", "latex", size: 11pt),
+  framed(image("/build/strength-latex.pdf", width: 100%)),
+)
+
 == Using LaTeX
 
 *On the web:*
@@ -436,6 +453,30 @@ It did not turn out that way:
 *Result:* today, most HTML is written by programs: content management
 systems, Markdown converters, site generators, JavaScript frameworks.
 
+== Where HTML shines
+
+- *Runs everywhere:* every device has a browser. Nothing to install.
+- *Every screen:* the page reflows. Readers can zoom, choose dark mode,
+  or listen with a screen reader.
+- *Links:* to a place in the page, or anywhere on the web
+- *Interaction:* forms, video, audio, and with JavaScript anything
+- *CSS:* one change restyles every page of a site
+- *Backwards compatible:* pages from 1995 still open today
+
+== Strength: one page, every screen
+
+#grid(columns: (1fr, 1fr), column-gutter: 1em,
+  src("/examples/strength-html.html", "html", from: 8, to: 31, size: 9pt),
+  {
+    framed(image("/build/strength-html-wide.png", width: 100%))
+    v(0.4em)
+    grid(columns: (auto, 1fr), column-gutter: 0.8em, align: bottom,
+      framed(image("/build/strength-html-narrow.png", height: 7.2cm)),
+      note[The same file, 900 and 360 pixels wide. No JavaScript.],
+    )
+  },
+)
+
 == Using HTML
 
 *You have all you need already:* a text editor and a browser.
@@ -531,7 +572,31 @@ HTML itself has no packages. It grows in layers:
 - An empty line starts a new paragraph
 - Three backticks start a code block, with the language name after them
 - `[text](https://example.com)` makes a link
-- Keep HTML out of Markdown: not every renderer shows it
+- Keep HTML out: it spoils the readable source
+
+== Where Markdown shines
+
+- *The source is the document:* the markup stays out of the way.
+  You can read a README in a terminal, a mail or a diff without rendering it.
+- *Almost nothing to learn:* five minutes, and you can start
+- *Plain text in git:* clean diffs, easy merges
+- *Everywhere:* GitHub, wikis, chat, note apps, documentation sites
+- *One source, many outputs* with Pandoc
+
+== Markdown: the language of LLMs
+
+- Chatbots answer in Markdown, and the chat window renders it.
+- LLMs learned from a web full of Markdown (GitHub, Stack Overflow),
+  so they read and write it fluently.
+- Instructions for coding agents are Markdown files:
+  `README.md`, `AGENTS.md`, `CLAUDE.md`
+- `llms.txt` (a proposal from 2024): a Markdown summary of a web site, for LLMs
+- Few characters for much content (our sample: #md-len in Markdown,
+  #html-len in HTML). That means fewer tokens, lower cost and more room
+  in the context.
+
+#v(0.3em)
+*Tip:* ask the LLM for Markdown, then convert it with Pandoc.
 
 == One name, many languages
 
@@ -582,12 +647,47 @@ Markdown has no comment syntax. Two tricks are common:
 
 - The link trick is ugly, but every renderer drops it.
   Our sample uses it.
-- The HTML comment is HTML inside Markdown. A converter to HTML passes
-  it on, and the browser hides it. `mdmost` does not render HTML
-  on purpose: it shows `⟨html⟩` in its place.
+- The HTML comment works in a browser. But it is HTML inside Markdown.
 
 #v(0.3em)
-*Tip:* keep HTML out of Markdown. If you need HTML, write HTML.
+*Keep HTML out of Markdown.* The point of Markdown is to stay out of
+the way, so that people can read the file as it is. Tags spoil that.
+Some renderers, like `mdmost`, do not show HTML at all, on purpose.
+If you need HTML, write HTML.
+
+== Metadata: YAML front matter
+
+#grid(columns: (1fr, 1fr), column-gutter: 1.2em,
+  {
+    src("/examples/frontmatter.md", "markdown", size: 13pt)
+    set text(size: 16pt)
+    [
+      - YAML between two `---` lines, at the very top
+      - Title, author, date and tags stay out of the text.
+        The body stays clean.
+    ]
+  },
+  {
+    [`pandoc -f markdown --standalone`]
+    framed(image("/build/frontmatter.png", width: 100%))
+    set text(size: 16pt)
+    [Also read by Jekyll, Hugo, Astro, Obsidian (“Properties”).
+     GitHub shows it as a table.]
+  },
+)
+
+== Not every reader knows front matter
+
+The same file, read as plain CommonMark: `pandoc -f commonmark`
+
+#src("/build/frontmatter-commonmark.html", "html", size: 13pt)
+
+- The first `---` becomes a horizontal rule.
+- The YAML lines become a paragraph, and the second `---` under them
+  turns that paragraph into a heading.
+- `pandoc -f gfm` drops the block without a word.
+
+*Again:* know which flavour your tools read.
 
 == Using Markdown
 
@@ -685,6 +785,23 @@ Popular extensions:
 #v(0.3em)
 *Watch out:* `*text*` is _italic_ in Markdown, but *bold* in Typst!
 
+== Where Typst shines
+
+- *One language* for markup and programming: variables, loops,
+  functions, data from CSV, JSON or YAML files
+- *Instant:* it compiles only what changed, and the preview follows your typing
+- *Clear error messages* that point at the exact place
+- *`set` and `show` rules:* change the look of every element in one place
+- *Maths with less typing:* `$sum_(k=1)^n k$` gives $sum_(k=1)^n k$
+- *Modern defaults:* Unicode, system fonts, tagged PDF for accessibility
+
+== Strength: scripting in the document
+
+#grid(columns: (1fr, 1fr), column-gutter: 1em, align: horizon,
+  src("/examples/strength-typst.typ", "typ", size: 10pt),
+  framed(image("/build/strength-typst.pdf", width: 100%)),
+)
+
 == How this deck works
 
 #between("/slides/slides.typ", "typ", "// <demo>", "// </demo>", size: 12pt)
@@ -775,6 +892,27 @@ and writes all of them, and Typst too.
   ],
   src("/build/pandoc-sample.typ", "typ", to: 22, size: 10pt),
 )
+
+== Strengths at a glance
+
+#{
+  set text(size: 13pt)
+  table(
+    columns: (auto, 1fr, 1fr, 1fr, 1fr),
+    table.header(
+      [], text(fill: colors.latex)[*LaTeX*], text(fill: colors.html)[*HTML*],
+      text(fill: colors.markdown)[*Markdown*], text(fill: colors.typst)[*Typst*]),
+    [Readable source], [fair], [poor], [*excellent*], [good],
+    [PDF and print], [*excellent*], [fair], [depends on the converter], [*excellent*],
+    [Maths], [*the reference*], [with KaTeX, MathJax], [with extensions], [very good],
+    [Screens, interaction], [no], [*excellent*], [through HTML], [experimental],
+    [Programming], [TeX macros (hard)], [JavaScript], [none], [*built in*],
+    [Feedback], [seconds], [*instant*], [*instant*], [*instant*],
+    [Error messages], [cryptic], [none: the browser guesses], [none], [*clear*],
+    [Stability], [*decades*], [*decades*], [depends on the flavour], [young (0.x)],
+    [Ecosystem], [*huge* (CTAN)], [*huge*], [large, fragmented], [growing],
+  )
+}
 
 == Which one when?
 
