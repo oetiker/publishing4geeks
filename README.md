@@ -10,7 +10,16 @@ Four systems, one sample document:
 | Markdown | `examples/sample.md`    | browser, terminal |
 | Typst    | `examples/sample.typ`   | PDF           |
 
-The slides are written in Typst: `slides/slides.typ`.
+The slides are written in Typst:
+
+- `slides/slides.typ`: the look of the deck, the title page, and one
+  `#include` per part
+- `slides/lib.typ`: helpers (`src`, `two`, `browser`, `terminal`, …) and colours
+- `slides/parts/*.typ`: the slides, one file per part
+
+Code excerpts on the slides are read from the files in `examples/` and
+selected by text (`until: "<h1>"`, `split: "## How to do it"`), not by
+line number, so editing a sample does not break a slide.
 
 ## Build
 
@@ -22,6 +31,9 @@ make clean
 
 Needs: `typst`, `latexmk` + pdflatex, `pandoc`, `mdmost`, `google-chrome`
 (headless screenshots), `python3`, `script` (util-linux).
+
+The slides use only the fonts in `fonts/` (Inter and JetBrains Mono, each
+with its licence file), so the deck looks the same on every machine.
 
 The slides read the sample files directly, so a changed sample shows up
 on the slides after the next `make`.

@@ -76,11 +76,15 @@ $(B)/frontmatter-commonmark.html: $(EX)/frontmatter.md | $(B)
 	pandoc -f commonmark -t html -o $@ $<
 
 # The slides read the examples and renders; --root lets them reach ../
-$(B)/slides.pdf: slides/slides.typ $(RENDERS) $(wildcard $(EX)/*)
-	typst compile --root . $< $@
+# The fonts come from fonts/, so every machine gets the same look.
+TYPST_SLIDES := --root . --font-path fonts --ignore-system-fonts
+SLIDES_SRC   := $(wildcard slides/*.typ slides/parts/*.typ fonts/*)
+
+$(B)/slides.pdf: $(SLIDES_SRC) $(RENDERS) $(wildcard $(EX)/*)
+	typst compile $(TYPST_SLIDES) slides/slides.typ $@
 
 watch: $(RENDERS)
-	typst watch --root . slides/slides.typ $(B)/slides.pdf
+	typst watch $(TYPST_SLIDES) slides/slides.typ $(B)/slides.pdf
 
 clean:
 	rm -rf $(B)
