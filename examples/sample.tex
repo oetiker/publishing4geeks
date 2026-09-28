@@ -1,0 +1,58 @@
+% Everything after a percent sign is a comment.
+% The document class sets the overall layout.
+\documentclass[a4paper,11pt]{article}
+
+% The preamble: settings for the whole document.
+\title{Counting Words}
+\author{A. Geek}
+\date{}  % empty: print no date
+
+\begin{document}  % the text starts here
+\maketitle        % print title and author
+
+% An empty line starts a new paragraph.
+This is a \emph{short} sample document. It shows
+\textbf{bold} text, \emph{italic} text and
+\verb|inline code|.
+
+\section{Introduction}  % numbered automatically
+Counting words sounds simple. It is simple,
+if you know your tools.
+
+\subsection{Why count words}
+\begin{itemize}  % a bullet list
+  \item Essays often have a word limit.
+  \item Editors pay by the word.
+  \item It is fun.
+\end{itemize}
+
+\section{How to do it}
+\begin{enumerate}  % a numbered list
+  \item Save your text as a plain text file.
+  \item Open a terminal.
+  \item Run one of the commands below.
+\end{enumerate}
+
+% {lll}: three columns, all left aligned.
+% & separates cells, \\ ends a row.
+\begin{tabular}{lll}
+  \hline
+  Tool   & Command                 & Notes    \\
+  \hline
+  wc     & \verb|wc -w file.txt|    & fast     \\
+  Python & \verb|python3 count.py| & flexible \\
+  \hline
+\end{tabular}
+
+\subsection{A small program}
+% verbatim prints the text exactly as typed.
+\begin{verbatim}
+import sys
+
+words = open(sys.argv[1]).read().split()
+print(len(words), "words")
+if len(words) < 100:
+    print("a short text & a quick read")
+\end{verbatim}
+
+\end{document}

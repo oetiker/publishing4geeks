@@ -1,0 +1,62 @@
+<!DOCTYPE html>  <!-- this is modern HTML -->
+<!-- This is a comment. The browser does not show it. -->
+<html lang="en">
+<head>  <!-- the head: information about the page -->
+  <meta charset="utf-8">
+  <title>Counting Words</title>  <!-- shown in the browser tab -->
+  <style>
+    /* This is CSS: it controls how things look. */
+    body  { font-family: Georgia, serif; max-width: 40em;
+            margin: 2em auto; line-height: 1.4; }
+    h1    { text-align: center; }
+    code  { color: #a0287f; }
+    pre   { background: #f4f4f4; padding: 0.5em; }
+    table { border-collapse: collapse; }
+    th, td { border: 1px solid #999; padding: 0.2em 0.6em; }
+  </style>
+</head>
+<body>  <!-- the body: the visible content -->
+  <h1>Counting Words</h1>
+  <p>A. Geek</p>
+
+  <!-- p is a paragraph. Line breaks in the source do not matter. -->
+  <p>This is a <em>short</em> sample document. It shows
+     <strong>bold</strong> text, <em>italic</em> text and
+     <code>inline code</code>.</p>
+
+  <h2>1 Introduction</h2>  <!-- no automatic numbers -->
+  <p>Counting words sounds simple. It is simple,
+     if you know your tools.</p>
+
+  <h3>1.1 Why count words</h3>
+  <ul>  <!-- ul: unordered (bullet) list -->
+    <li>Essays often have a word limit.</li>
+    <li>Editors pay by the word.</li>
+    <li>It is fun.</li>
+  </ul>
+
+  <h2>2 How to do it</h2>
+  <ol>  <!-- ol: ordered (numbered) list -->
+    <li>Save your text as a plain text file.</li>
+    <li>Open a terminal.</li>
+    <li>Run one of the commands below.</li>
+  </ol>
+
+  <table>  <!-- tr: table row, th: header cell, td: data cell -->
+    <tr><th>Tool</th>  <th>Command</th>                  <th>Notes</th></tr>
+    <tr><td>wc</td>    <td><code>wc -w file.txt</code></td>  <td>fast</td></tr>
+    <tr><td>Python</td><td><code>python3 count.py</code></td><td>flexible</td></tr>
+  </table>
+
+  <h3>2.1 A small program</h3>
+  <!-- pre keeps spaces and line breaks.
+       But < and & must still be written as &lt; and &amp; -->
+<pre><code>import sys
+
+words = open(sys.argv[1]).read().split()
+print(len(words), "words")
+if len(words) &lt; 100:
+    print("a short text &amp; a quick read")
+</code></pre>
+</body>
+</html>
