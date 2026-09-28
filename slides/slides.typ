@@ -40,8 +40,10 @@
   fill: luma(246), inset: 8pt, radius: 4pt, width: 100%, it)
 #show raw.where(block: false): it => box(
   fill: luma(240), inset: (x: 3pt), outset: (y: 3pt), radius: 2pt, it)
-#set list(spacing: 0.65em)
-#set enum(spacing: 0.65em)
+// Tight lines inside an item, clear space between items.
+#set par(leading: 0.5em)
+#set list(spacing: 1.1em)
+#set enum(spacing: 1.1em)
 #set table(inset: 7pt, stroke: 0.5pt + luma(180))
 #show link: set text(fill: rgb("#1a6fd4"))
 
@@ -102,6 +104,11 @@
   }))
 }
 
+// Two columns side by side. Typst does not balance columns,
+// so each slide splits its content by hand.
+#let two(left, right) = grid(
+  columns: (1fr, 1fr), column-gutter: 2.2em, left, right)
+
 #let note(body) = text(size: 0.8em, fill: luma(90), body)
 
 #let exercise(service, url, tasks) = {
@@ -109,7 +116,9 @@
     fill: part.get().color.lighten(88%), inset: 14pt, radius: 6pt, width: 100%,
     [Open #link(url)[#service] and paste the sample file.])
   v(0.3em)
-  enum(..tasks)
+  let half = calc.ceil(tasks.len() / 2)
+  two(enum(..tasks.slice(0, half)),
+      enum(start: half + 1, ..tasks.slice(half)))
 }
 
 // ---------------------------------------------------------------- title
@@ -126,15 +135,16 @@
 
 == Learning a new language got cheap
 
+#two[
 - *Before:* a missing brace, a cryptic error message, and days
   in manuals and forums to find the cause.
 - *Now:* LLMs know these languages very well. Paste the
   error, get an explanation and a fix in seconds.
+][
 - The painful part of learning a computer language is (mostly) gone.
-
-#v(0.6em)
-*What remains is your part:* know what the language can do,
-ask for the right thing, and recognise a good answer.
+- *What remains is your part:* know what the language can do,
+  ask for the right thing, and recognise a good answer.
+]
 
 == What we learn today
 
@@ -179,14 +189,16 @@ keep them in git, and compare versions with `diff`.
 
 == Say what it is, not how it looks
 
+#two[
 All four languages use *logical markup*:
 
-#grid(
-  columns: (auto, auto), column-gutter: 3em, row-gutter: 0.8em,
-  [LaTeX: `\section{Introduction}`], [Markdown: `## Introduction`],
-  [HTML: `<h2>Introduction</h2>`], [Typst: `= Introduction`],
+#grid(row-gutter: 0.9em,
+  [LaTeX: `\section{Introduction}`],
+  [HTML: `<h2>Introduction</h2>`],
+  [Markdown: `## Introduction`],
+  [Typst: `= Introduction`],
 )
-
+][
 Each line says the same thing: _“this is a section heading”_.
 The size, font and numbering come from somewhere else:
 
@@ -194,6 +206,7 @@ The size, font and numbering come from somewhere else:
 - the style sheet (HTML with CSS)
 - the renderer (Markdown)
 - `set` and `show` rules (Typst)
+]
 
 == Fifty years of markup
 
@@ -230,12 +243,15 @@ The size, font and numbering come from somewhere else:
 
 We write *the same document* in all four languages:
 
+#two[
 - a title and an author
 - a paragraph with *bold*, _italic_ and `inline code`
 - two sections, each with a subsection
+][
 - a bullet list, a numbered list and a small table
 - a short Python program as a code block
 - comments that explain the markup
+]
 
 #v(0.5em)
 The text stays the same. Only the markup changes.
@@ -247,25 +263,31 @@ All files are in the `examples/` folder.
 
 == What is LaTeX for?
 
+#two[
 - Scientific and technical documents: papers, theses, reports, books
 - Excellent typesetting: line breaks, hyphenation, spacing
 - The best mathematical formulas: $sum_(k=1)^n k = (n(n+1))/2$
+][
 - The standard in maths, physics and computer science;
   many journals accept only LaTeX
 - The product is a *PDF*: fixed pages, made for print
+]
 
 == History
 
+#two[
 - *1977:* Donald Knuth does not like the typesetting of the
   new edition of his book _The Art of Computer Programming_.
   He writes his own typesetting system: *TeX* (first release 1978).
 - TeX is frozen. Its version number approaches $pi$: today 3.141592653.
+][
 - *1984:* Leslie Lamport writes *LaTeX*: macros on top of TeX
   for _logical_ markup (`\section` instead of “big bold font”).
 - *1994:* LaTeX2e. This is still the LaTeX you use today;
   the LaTeX Project team keeps improving it.
 - New engines: pdfTeX (makes PDF directly), XeTeX and LuaTeX
   (Unicode and the fonts of your system).
+]
 
 == The source (1/2)
 
@@ -291,14 +313,14 @@ All files are in the `examples/` folder.
 
 == The rules
 
+#two[
 - Commands: `\name{argument}`, for example `\textbf{bold}`
 - Environments: `\begin{itemize}` … `\end{itemize}`
 - `%` starts a comment until the end of the line
 - An empty line starts a new paragraph
-- These characters are special: `# $ % & ~ _ ^ \ { }`. \
+- These characters are special: `# $ % & ~ _ ^ \ { }`.
   Write them as `\# \$ \% \& \_` and so on.
-
-#v(0.4em)
+][
 *The classic trap:* write `file_name.txt` in the text and you get
 
 ```
@@ -306,17 +328,23 @@ All files are in the `examples/` folder.
 ```
 
 The `_` means “subscript”, and that is only allowed in maths.
-Write `file\_name.txt`. An LLM explains messages like this one immediately.
+Write `file\_name.txt`.
+
+An LLM explains messages like this one immediately.
+]
 
 == Where LaTeX shines
 
+#two[
 - *Maths:* the reference. MathJax and KaTeX show LaTeX maths on the web,
   and Markdown and Word accept its syntax.
 - *Numbers that stay correct:* cross-references, table of contents,
   index, bibliography (BibTeX, biblatex)
+][
 - *Fine typography:* line breaks chosen for the whole paragraph, hyphenation
 - *Stable:* a document from the 1990s still compiles today
 - *Accepted everywhere:* journals, arXiv, publishers' templates
+]
 
 == Strength: maths and cross-references
 
@@ -327,14 +355,17 @@ Write `file\_name.txt`. An LLM explains messages like this one immediately.
 
 == Using LaTeX
 
-*On the web:*
-- #link("https://www.overleaf.com")[Overleaf]: free account, live preview, work together on a document
-
-*On your computer:*
+#two[
+*On the web*
+- #link("https://www.overleaf.com")[Overleaf]: free account, live preview,
+  work together on a document
+][
+*On your computer*
 - *TeX Live* (Linux, Windows), *MacTeX* (macOS): a full install is several GB
 - *MiKTeX* (Windows): small install, gets packages when you need them
 - Compile: `latexmk -pdf sample.tex` (runs LaTeX as often as needed)
 - Editors: TeXstudio, VS Code with _LaTeX Workshop_
+]
 
 == Packages
 
@@ -375,24 +406,32 @@ Document classes set the basic layout:
 
 == What is HTML for?
 
+#two[
 - Pages for the *web*: a browser shows them
 - *Links* between documents: that is the “hyper” in HyperText
 - No fixed pages: the text flows to fit every screen,
   from a phone to a wall display
+][
 - Also inside e-mails, e-books (EPUB is HTML) and help systems
 - *HTML* says what things are. *CSS* says how they look.
+]
 
 == History
 
+#two[
 - *1989:* Tim Berners-Lee at CERN proposes a system to share
   documents between physicists.
 - *1990:* The first browser, _WorldWideWeb_, is also an *editor*.
   The plan: writing a page is as easy as reading one.
 - *1991:* “HTML Tags”: 18 simple elements, based on SGML.
-- *1994–1996:* W3C is founded. Håkon Wium Lie proposes CSS; CSS 1 follows in 1996.
-- *Browser wars:* each browser adds its own tags (`<font>`, `<blink>`, `<marquee>`).
+][
+- *1994–1996:* W3C is founded. Håkon Wium Lie proposes CSS;
+  CSS 1 follows in 1996.
+- *Browser wars:* each browser adds its own tags
+  (`<font>`, `<blink>`, `<marquee>`).
 - *2004:* WHATWG (Apple, Mozilla, Opera) continues HTML.
   *2014:* HTML5. Since 2019: one _HTML Living Standard_.
+]
 
 == The source: head and style sheet
 
@@ -421,17 +460,18 @@ Document classes set the basic layout:
 
 == The rules
 
+#two[
 - Elements: `<tag>content</tag>`, for example `<em>word</em>`
 - Attributes: `<html lang="en">`
 - Some elements have no end: `<meta …>`, `<br>`, `<img …>`
 - Comments: `<!-- … -->` in HTML, `/* … */` in CSS
+][
 - Spaces and line breaks in the source collapse to one space.
   Only `<pre>` keeps them.
 - `<` and `&` must be written as `&lt;` and `&amp;`
-
-#v(0.3em)
-*CSS* is a second language:
-`selector { property: value; }`, for example `h1 { text-align: center; }`
+- *CSS* is a second language: `selector { property: value; }`,
+  for example `h1 { text-align: center; }`
+]
 
 == HTML was meant to be human friendly
 
@@ -442,12 +482,15 @@ Document classes set the basic layout:
 The idea in 1991: a few simple tags that anybody can type.
 It did not turn out that way:
 
+#two[
 - The text hides between tags. Without comments, our sample has
   *#html-len characters in HTML* and *#md-len in Markdown*.
 - Every list item, every table cell needs its own start and end tag.
+][
 - Browsers accept broken HTML and guess what you meant.
   So errors stay invisible until another browser guesses differently.
 - The look moved to CSS: now you must learn two languages.
+]
 
 #v(0.3em)
 *Result:* today, most HTML is written by programs: content management
@@ -455,13 +498,16 @@ systems, Markdown converters, site generators, JavaScript frameworks.
 
 == Where HTML shines
 
+#two[
 - *Runs everywhere:* every device has a browser. Nothing to install.
 - *Every screen:* the page reflows. Readers can zoom, choose dark mode,
   or listen with a screen reader.
 - *Links:* to a place in the page, or anywhere on the web
+][
 - *Interaction:* forms, video, audio, and with JavaScript anything
 - *CSS:* one change restyles every page of a site
 - *Backwards compatible:* pages from 1995 still open today
+]
 
 == Strength: one page, every screen
 
@@ -479,27 +525,34 @@ systems, Markdown converters, site generators, JavaScript frameworks.
 
 == Using HTML
 
+#two[
 *You have all you need already:* a text editor and a browser.
-
-- Open the file directly (`file:///…/sample.html`) and press reload after each change
+- Open the file directly (`file:///…/sample.html`) and press reload
+  after each change
 - Developer tools (#box[`F12`]) show how the browser understands your page
 - VS Code with _Live Preview_ reloads on every save
+][
 - Check your page: #link("https://validator.w3.org")[validator.w3.org]
 - Reference: #link("https://developer.mozilla.org")[MDN Web Docs]
 
-*On the web:* #link("https://codepen.io/pen/")[CodePen], #link("https://jsfiddle.net")[JSFiddle]:
-edit HTML and CSS, see the result live.
+*On the web*
+- #link("https://codepen.io/pen/")[CodePen], #link("https://jsfiddle.net")[JSFiddle]:
+  edit HTML and CSS, see the result live
+]
 
 == Extensions
 
 HTML itself has no packages. It grows in layers:
 
+#two[
 - *CSS* for the look, *JavaScript* for behaviour
 - *Classless style sheets*: add one `<link>` line and plain HTML
   looks good (Pico CSS, Water.css, simple.css)
+][
 - *Frameworks*: Bootstrap, Tailwind
 - *Libraries*: KaTeX or MathJax for formulas, highlight.js or Prism for code
 - *Web Components*: define your own elements, like `<my-chart>`
+]
 
 == Your turn: HTML (10 minutes)
 
@@ -517,25 +570,31 @@ HTML itself has no packages. It grows in layers:
 
 == What is Markdown for?
 
+#two[
 - Text that is *easy to read as plain text* and can become HTML
 - README files, documentation, wikis, notes, forum posts, chat messages
 - GitHub, GitLab, Stack Overflow, Obsidian, Jupyter … all speak it
+][
 - LLMs answer in Markdown, too
 - The product is usually *HTML*. But there are also renderers for the
   terminal, and converters to PDF, Word, slides …
+]
 
 == History
 
+#two[
 - *2004:* John Gruber, with help from Aaron Swartz, writes a Perl script:
   `Markdown.pl` converts text to HTML.
 - The idea comes from plain-text e-mail: `*stars*`, `> quotes`, `- lists`.
 - The goal: _“readable as-is, without looking like it has been marked up”_.
+][
 - The description was informal and left many cases open.
   The last release came in December 2004.
 - *2008 and later:* GitHub, Stack Overflow, Reddit adopt Markdown,
   and each one adds its own extensions.
 - *2014:* *CommonMark*: an exact specification with a test suite.
   *2017:* *GitHub Flavored Markdown* (GFM) = CommonMark + tables, task lists, …
+]
 
 == The source
 
@@ -565,38 +624,45 @@ HTML itself has no packages. It grows in layers:
 
 == The rules
 
+#two[
 - `#`, `##`, `###`: headings
 - `*italic*` or `_italic_`, `**bold**`, #raw("`code`")
 - `-` or `*` for bullets, `1.` for numbered lists
 - Indent to nest a list
+][
 - An empty line starts a new paragraph
 - Three backticks start a code block, with the language name after them
 - `[text](https://example.com)` makes a link
 - Keep HTML out: it spoils the readable source
+]
 
 == Where Markdown shines
 
+#two[
 - *The source is the document:* the markup stays out of the way.
   You can read a README in a terminal, a mail or a diff without rendering it.
 - *Almost nothing to learn:* five minutes, and you can start
+][
 - *Plain text in git:* clean diffs, easy merges
 - *Everywhere:* GitHub, wikis, chat, note apps, documentation sites
 - *One source, many outputs* with Pandoc
+]
 
 == Markdown: the language of LLMs
 
+#two[
 - Chatbots answer in Markdown, and the chat window renders it.
 - LLMs learned from a web full of Markdown (GitHub, Stack Overflow),
   so they read and write it fluently.
 - Instructions for coding agents are Markdown files:
   `README.md`, `AGENTS.md`, `CLAUDE.md`
+][
 - `llms.txt` (a proposal from 2024): a Markdown summary of a web site, for LLMs
 - Few characters for much content (our sample: #md-len in Markdown,
   #html-len in HTML). That means fewer tokens, lower cost and more room
   in the context.
-
-#v(0.3em)
-*Tip:* ask the LLM for Markdown, then convert it with Pandoc.
+- *Tip:* ask the LLM for Markdown, then convert it with Pandoc.
+]
 
 == One name, many languages
 
@@ -638,22 +704,27 @@ HTML itself has no packages. It grows in layers:
 
 == And comments?
 
+#two[
 Markdown has no comment syntax. Two tricks are common:
 
 ```markdown
-[//]: # (a link definition that is never used)
+[//]: # (a link that is never used)
 <!-- an HTML comment -->
 ```
 
 - The link trick is ugly, but every renderer drops it.
   Our sample uses it.
 - The HTML comment works in a browser. But it is HTML inside Markdown.
+][
+*Keep HTML out of Markdown.*
 
-#v(0.3em)
-*Keep HTML out of Markdown.* The point of Markdown is to stay out of
-the way, so that people can read the file as it is. Tags spoil that.
+The point of Markdown is to stay out of the way, so that people can
+read the file as it is. Tags spoil that.
+
 Some renderers, like `mdmost`, do not show HTML at all, on purpose.
+
 If you need HTML, write HTML.
+]
 
 == Metadata: YAML front matter
 
@@ -682,40 +753,46 @@ The same file, read as plain CommonMark: `pandoc -f commonmark`
 
 #src("/build/frontmatter-commonmark.html", "html", size: 13pt)
 
+#two[
 - The first `---` becomes a horizontal rule.
 - The YAML lines become a paragraph, and the second `---` under them
   turns that paragraph into a heading.
+][
 - `pandoc -f gfm` drops the block without a word.
-
-*Again:* know which flavour your tools read.
+- *Again:* know which flavour your tools read.
+]
 
 == Using Markdown
 
-*On your computer:*
+#two[
+*On your computer*
 - Any text editor. VS Code shows a preview with #box[`Ctrl+Shift+V`].
 - Read it in the terminal: `mdmost sample.md`
 - Convert it: `pandoc sample.md -o sample.html`
 - Note apps built on Markdown: Obsidian, Zettlr, Typora
-
-*On the web:*
+][
+*On the web*
 - GitHub and GitLab show every `.md` file (and your README) as a page
 - #link("https://dillinger.io")[Dillinger], #link("https://stackedit.io")[StackEdit]:
   editor and preview side by side
 - HedgeDoc: write Markdown together
+]
 
 == Extensions
 
-Markdown has no packages. Extensions live *in the tool* that converts it:
+Markdown has no packages. Extensions live *in the tool* that converts it.
 
+#two[
+*Tools*
 - pandoc: filters (for example in Lua)
 - markdown-it, remark, Python-Markdown: plugins
-
-Popular extensions:
-
+][
+*Popular extensions*
 - maths with KaTeX or MathJax: `$E = m c^2$`
 - diagrams: a code block with the language `mermaid` (GitHub draws it)
 - call-out boxes: `> [!NOTE]` on GitHub
 - footnotes: `text[^1]`
+]
 
 #note[Each extension works only in the tools that know it.]
 
@@ -735,25 +812,31 @@ Popular extensions:
 
 == What is Typst for?
 
+#two[
 - The same jobs as LaTeX: papers, theses, reports, letters, slides
   (_this_ deck is Typst)
 - Very fast: the preview changes while you type
 - Error messages you can understand
+][
 - Markup as light as Markdown, and one real programming language
   for everything else
 - The product is a *PDF*. HTML output is experimental.
+]
 
 == History
 
+#two[
 - *2019:* Laurenz Mädje and Martin Haug start Typst at TU Berlin.
   They do not want to fight LaTeX any more.
 - *2022:* their master's theses: the language and fast incremental compilation
 - *March 2023:* the compiler becomes open source (Apache 2.0, written in Rust),
   and the web app #link("https://typst.app")[typst.app] opens to everybody.
+][
 - Typst GmbH (Berlin) earns its money with the web app.
   The compiler stays free.
 - Still version 0.x: a new version can change things.
   This deck uses Typst #sys.version.
+]
 
 == The source
 
@@ -774,26 +857,30 @@ Popular extensions:
 
 == The rules
 
+#two[
 - *Markup mode* (the default): `= Heading`, `*bold*`, `_italic_`,
   #raw("`code`"), `-` bullet, `+` numbered, empty line = paragraph
 - `#` switches to *code mode*: `#table(…)`, `#image("x.png")`
 - `[ … ]` is content (markup) inside code
+][
 - `// comment` and `/* comment */`
 - `#set` changes the defaults of an element: `#set text(size: 11pt)`
 - `#show` changes how an element looks
-
-#v(0.3em)
-*Watch out:* `*text*` is _italic_ in Markdown, but *bold* in Typst!
+- *Watch out:* `*text*` is _italic_ in Markdown, but *bold* in Typst!
+]
 
 == Where Typst shines
 
+#two[
 - *One language* for markup and programming: variables, loops,
   functions, data from CSV, JSON or YAML files
 - *Instant:* it compiles only what changed, and the preview follows your typing
 - *Clear error messages* that point at the exact place
+][
 - *`set` and `show` rules:* change the look of every element in one place
 - *Maths with less typing:* `$sum_(k=1)^n k$` gives $sum_(k=1)^n k$
 - *Modern defaults:* Unicode, system fonts, tagged PDF for accessibility
+]
 
 == Strength: scripting in the document
 
@@ -808,18 +895,21 @@ Popular extensions:
 
 == Using Typst
 
-*On the web:*
+#two[
+*On the web*
 - #link("https://typst.app")[typst.app]: free account, live preview, work together
-
-*On your computer:*
+][
+*On your computer*
 - One single program (about 55 MB), no big installation
 - `typst compile sample.typ`: make the PDF once
 - `typst watch sample.typ`: make it again on every save
 - VS Code with _Tinymist_: live preview and completion
 - Install with a package manager, or download from GitHub
+]
 
 == Packages
 
+#two[
 ```typ
 #import "@preview/name:version"
 ```
@@ -827,13 +917,14 @@ Popular extensions:
 Typst downloads the package automatically from
 #link("https://typst.app/universe")[Typst Universe].
 
+#note[Many packages are young, too: check the version number.]
+][
 - `cetz`: drawings
 - `fletcher`: diagrams with arrows
 - `codly`: nicer code blocks
 - `touying`, `polylux`: slides
 - templates for theses, letters, journals: `typst init @preview/…`
-
-#note[Many packages are young, too: check the version number.]
+]
 
 == Your turn: Typst (10 minutes)
 
@@ -918,7 +1009,7 @@ and writes all of them, and Typst too.
 
 #table(
   columns: (1fr, auto),
-  stroke: none, inset: (x: 0pt, y: 7pt), column-gutter: 1.5em,
+  stroke: none, inset: (x: 0pt, y: 11pt), column-gutter: 1.5em,
   [A paper for a journal, lots of maths, a publisher's template], text(fill: colors.latex)[*LaTeX*],
   [A web page, or a document with interactive parts], text(fill: colors.html)[*HTML*],
   [README, notes, documentation, a wiki page, a chat message], text(fill: colors.markdown)[*Markdown*],
@@ -928,11 +1019,14 @@ and writes all of them, and Typst too.
 
 == Let the LLM help you well
 
+#two[
 - Paste the *complete* error message and the lines around it.
 - Ask for the smallest fix, and ask *why* it works.
 - Say what you use: “LaTeX with pdflatex”, “GitHub Markdown”, “Typst 0.15”.
+][
 - Ask for the basic way first: “without extra packages”.
 - Compile and look at the result. The LLM can be wrong, too.
+]
 
 == Links
 
